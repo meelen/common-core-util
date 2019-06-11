@@ -1,28 +1,32 @@
-package org.orchapod;
+package org.meelen.redisson;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import org.meelen.lock.ReadThread;
+import org.meelen.lock.WriteThread;
+import org.redisson.api.RQueue;
+import org.redisson.api.RReadWriteLock;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
-public class ReentrantLockTest extends TestCase{
+public class RedissonLockTest extends RedissonTest{
 
 	private boolean verbose = true;
 	private int read_thread_count = 20;
+	public static final String KEY = "redisson.test.lockpoint";
+
+	public void teardown(){
+		this.redisson.shutdown();
+	}
 
 	/**
 	 * Create the test case
 	 *
 	 * @param testName name of the test case
 	 */
-	public ReentrantLockTest(String testName){
+	public RedissonLockTest(String testName){
 		super(testName);
 	}
 
@@ -30,7 +34,7 @@ public class ReentrantLockTest extends TestCase{
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite(){
-		return new TestSuite(ReentrantLockTest.class);
+		return new TestSuite(RedissonLockTest.class);
 	}
 
 	public static void sleep(long time){
@@ -41,26 +45,26 @@ public class ReentrantLockTest extends TestCase{
 			System.exit(1); 
 		}
 	}
-
+	
 	/**
 	*/
 	public void testReadLockBeforeWriteLock() throws InterruptedException{
 
 		// Create Lock, CDL, counter, and label
-		final ReentrantReadWriteLock rrwl = new ReentrantReadWriteLock();
+		final RReadWriteLock rrrwl = this.redisson.getReadWriteLock(KEY);
 		final CountDownLatch cdl = new CountDownLatch(1);
 		final AtomicInteger counter = new AtomicInteger(0);
-		final String label = "RRWL";
+		final String label = "Redisson";
 		final long task_duration = 4000;
 		int result = 0;
 
 		// Create write thread
-		Thread writeThread = new Thread(new WriteThread(label, rrwl, cdl, this.verbose, task_duration)); 
+		Thread writeThread = new Thread(new WriteThread(label, rrrwl, cdl, this.verbose, task_duration)); 
 
 		// Create read threads
 		Thread[] readThreads = new Thread[this.read_thread_count];
 		for(int i = 0; i < readThreads.length; i++){
-			readThreads[i] = new Thread(new ReadThread(label, rrwl, counter, this.verbose, task_duration, i+1));
+			readThreads[i] = new Thread(new ReadThread(label, rrrwl, counter, this.verbose, task_duration, i+1));
 		}
 
 		// Fire off read threads
@@ -106,20 +110,20 @@ public class ReentrantLockTest extends TestCase{
 	public void testReadLockAfterWriteLock() throws InterruptedException{
 
 		// Create Lock, CDL, counter, and label
-		final ReentrantReadWriteLock rrwl = new ReentrantReadWriteLock();
+		final RReadWriteLock rrrwl = this.redisson.getReadWriteLock(KEY);
 		final CountDownLatch cdl = new CountDownLatch(1);
 		final AtomicInteger counter = new AtomicInteger(0);
-		final String label = "RRWL";
+		final String label = "Redisson";
 		final long task_duration = 4000;
 		int result = 0;
 
 		// Create write thread
-		Thread writeThread = new Thread(new WriteThread(label, rrwl, cdl, this.verbose, task_duration)); 
+		Thread writeThread = new Thread(new WriteThread(label, rrrwl, cdl, this.verbose, task_duration)); 
 
 		// Create read threads
 		Thread[] readThreads = new Thread[this.read_thread_count];
 		for(int i = 0; i < readThreads.length; i++){
-			readThreads[i] = new Thread(new ReadThread(label, rrwl, counter, this.verbose, task_duration, i+1));
+			readThreads[i] = new Thread(new ReadThread(label, rrrwl, counter, this.verbose, task_duration, i+1));
 		}
 
 		// Fire off write thread

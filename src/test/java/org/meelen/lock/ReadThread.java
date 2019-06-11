@@ -1,11 +1,10 @@
-package org.orchapod;
+package org.meelen.lock;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
-class ReadThread implements Runnable{
+public class ReadThread implements Runnable{
 
 	private final String label;
 	private final ReadWriteLock rwl;
