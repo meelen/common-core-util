@@ -40,9 +40,9 @@ public class RedissonQueenTest extends RedissonTest{
 	public void testAddQueen() {
 		// 定义个队列
 		RQueue<Long> queue = redisson.getQueue(QUEEN_NAME);
-		queue.add(19099990998888L);
-		queue.add(19099990998889L);
-		queue.add(19099990998880L);
+		queue.add(19099990998881L);
+		queue.add(19099990998882L);
+		queue.add(19099990998883L);
 	}
 	
 	/**
@@ -51,6 +51,7 @@ public class RedissonQueenTest extends RedissonTest{
 	 * @throws IOException 
 	 */
 	public void testPollQueen() throws IOException {
+		testAddQueen();
 		// 定时线程池 
 		ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(2);
 		scheduledThreadPoolExecutor.scheduleAtFixedRate(new Runnable() {
