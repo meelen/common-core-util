@@ -88,7 +88,8 @@ public class RedissonQueenTest extends RedissonTest{
 	/** 订阅者 */
 	public void testBlockingQueueSubscriber() throws IOException {
 		RTopic topic = redisson.getTopic("queue_sms_count", new SerializationCodec());
-		// 每次消费都会从redisson连接池取一个连接，注意与别的业务redisson分开配置	
+		// 每次消费都会从redisson连接池取一个连接，注意与别的业务redisson分开配置,
+		// 或使用ExecutorService限制线程情况父类setUp()方法
 	    topic.addListener(String.class, new MessageListener<String>() {
 	            @Override
 	            public void onMessage(CharSequence charSequence, String userId) {
