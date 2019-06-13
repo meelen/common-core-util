@@ -1,10 +1,14 @@
 package org.meelen.redisson;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.redisson.api.RQueue;
+import org.redisson.api.RTopic;
+import org.redisson.api.listener.MessageListener;
+import org.redisson.codec.SerializationCodec;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -65,5 +69,35 @@ public class RedissonQueenTest extends RedissonTest{
 		}, 0, 2, TimeUnit.SECONDS);
 		System.in.read();
 	}
+	
+	// ################################## BlockingQueue队列发布、订阅模式 start #########
+	/** 发布者 */
+	public void testBlockingQueuePublisher() throws IOException {
+		while(true){
+	        RTopic topic = redisson.getTopic("queue_sms_count", new SerializationCodec());
+	        Scanner scan = new Scanner(System.in);
+	        String read = scan.nextLine();
+	        topic.publish(read);
+	        System.out.println("Thread: "+Thread.currentThread().toString());
+	        if(read.equals("exist")) {
+	        	scan.close();
+	        	return;
+	        }
+	    }
+	}
+	/** 订阅者 */
+	public void testBlockingQueueSubscriber() throws IOException {
+		RTopic topic = redisson.getTopic("queue_sms_count", new SerializationCodec());
+		// 每次消费都会从redisson连接池取一个连接，注意与别的业务redisson分开配置	
+	    topic.addListener(String.class, new MessageListener<String>() {
+	            @Override
+	            public void onMessage(CharSequence charSequence, String userId) {
+	                System.out.println("onMessage:"+charSequence+"; Thread: "+Thread.currentThread().toString());
+	                System.out.println("userId : " + userId);
+	            }
+	        });
+	    System.in.read();
+	}
+	// ################################## BlockingQueue队列发布、订阅模式 end ##############
 	
 }
