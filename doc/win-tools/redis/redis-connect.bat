@@ -1,0 +1,1 @@
+D:\tools\Redis-x64-3.2.100\redis-cli -h 47.106.130.16 -p 9379 -a 2019foOU*129redAb
