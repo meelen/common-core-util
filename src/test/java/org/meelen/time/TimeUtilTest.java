@@ -14,8 +14,11 @@ public class TimeUtilTest extends TestCase {
 	}
 	
 	public void testLocalDateTime() {
-		//获取秒数
+		// 日期转秒
 		Long seconds = LocalDateTime.now().toEpochSecond(EAST_8);
 		System.out.println(seconds);
+		// 毫秒转日期
+		Instant instant = Instant.ofEpochMilli(1560873600000L);
+		System.out.println(LocalDateTime.ofInstant(instant, EAST_8));
 	}
 }

@@ -1,17 +1,35 @@
 package org.meelen.redisson;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
 
 import org.meelen.lock.ReadThread;
 import org.meelen.lock.WriteThread;
-import org.redisson.api.RQueue;
+import org.redisson.api.RBucket;
 import org.redisson.api.RReadWriteLock;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 public class RedissonLockTest extends RedissonTest{
+	
+	public void testRBucket() {
+		// 加锁
+		RBucket<Object> lock = redisson.getBucket("weather_lock");
+		lock.set(null);
+		// lock.set("lock", 2, TimeUnit.MINUTES);
+	}
+	
+	public void testRBucket2() {
+		RBucket<Object> lock = redisson.getBucket("weather_lock");
+		if(null != lock.get()) {
+			System.out.println("false");
+		}else {
+			System.out.println("true");
+		}	
+	}
 
 	private boolean verbose = true;
 	private int read_thread_count = 20;
