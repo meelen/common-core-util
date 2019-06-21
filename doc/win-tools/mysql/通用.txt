@@ -1,0 +1,1 @@
+mysqld.exe --console --skip-grant-tables  --log_syslog=0 --max_allowed_packet=100M  --explicit_defaults_for_timestamp

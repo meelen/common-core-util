@@ -23,7 +23,12 @@
 			<artifactId>redisson-spring-boot-starter</artifactId>
 			<version>${version.redisson}</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/fastutil/fastutil -->
+		<dependency>
+			<groupId>fastutil</groupId>
+			<artifactId>fastutil</artifactId>
+			<version>5.0.9</version>
+		</dependency>
 	</dependencies>
 
 </project>
