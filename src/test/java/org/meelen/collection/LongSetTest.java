@@ -39,8 +39,7 @@ public class LongSetTest extends TestCase{
 		try (
 				// 64位系统中long类型占8字节=64bit
 				ByteArrayOutputStream bos = new ByteArrayOutputStream(obj.size() * 8); 
-				DataOutputStream writer = new DataOutputStream(bos);
-				) {
+				DataOutputStream writer = new DataOutputStream(bos); ) {
 			
 			for (long value : obj) {
 				writer.writeLong(value);
@@ -66,8 +65,7 @@ public class LongSetTest extends TestCase{
 		// 括号里不用手动关闭
 		try (
 				ByteArrayInputStream bis = new ByteArrayInputStream(bytes); 
-				DataInputStream ois = new DataInputStream(bis);
-				) {
+				DataInputStream ois = new DataInputStream(bis); ) {
 			
 			while (ois.available() > 0) {
 				obj.add(ois.readLong());

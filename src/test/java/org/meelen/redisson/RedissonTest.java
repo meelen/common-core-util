@@ -23,7 +23,10 @@ public class RedissonTest extends TestCase{
 	public void setUp() throws Exception{
 		try{
 			Config config = new Config();
-			String url = "redis://47.106.130.16:9379";
+//			String url = "redis://47.106.130.16:9379";
+//			config.useSingleServer().setAddress(url);
+//			config.useSingleServer().setPassword("2019foOU*129redAb");
+			String url = "redis://47.112.0.183:9379";
 			config.useSingleServer().setAddress(url);
 			config.useSingleServer().setPassword("2019foOU*129redAb");
 			// 自定义线程池

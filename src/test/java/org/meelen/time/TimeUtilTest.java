@@ -18,7 +18,7 @@ public class TimeUtilTest extends TestCase {
 		Long seconds = LocalDateTime.now().toEpochSecond(EAST_8);
 		System.out.println(seconds);
 		// 毫秒转日期
-		Instant instant = Instant.ofEpochMilli(1560873600000L);
+		Instant instant = Instant.ofEpochMilli(1561392000000L);
 		System.out.println(LocalDateTime.ofInstant(instant, EAST_8));
 	}
 }
