@@ -44,7 +44,7 @@ public class ReadThread implements Runnable{
 		// Pretend that there's computationally intensive task to do
 		ReentrantLockTest.sleep(this.task_duration/2);
 
-		// Count up in middle of the task
+		// Count up request middle of the task
 		counter.incrementAndGet();
 
 		// Finish this imaginary computationally intensive task

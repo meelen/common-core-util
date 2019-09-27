@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  */
 public class RedissonQueenTest extends RedissonTest{
 
-	public static final String QUEEN_NAME = "redisson.test.queen";
+	public static final String QUEEN_NAME = "redis.test.queen";
 
 	/**
 	 * 

@@ -33,7 +33,7 @@ public class RedissonLockTest extends RedissonTest{
 
 	private boolean verbose = true;
 	private int read_thread_count = 20;
-	public static final String KEY = "redisson.test.lockpoint";
+	public static final String KEY = "redis.test.lockpoint";
 
 	public void teardown(){
 		this.redisson.shutdown();

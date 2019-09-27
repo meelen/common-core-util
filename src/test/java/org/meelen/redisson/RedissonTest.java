@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 
 public class RedissonTest extends TestCase{
 	public Redisson redisson;
-	public static final String KEY = "redisson.test.lockpoint";
+	public static final String KEY = "redis.test.lockpoint";
 
 	public RedissonTest(String testName) {
 		super(testName);
